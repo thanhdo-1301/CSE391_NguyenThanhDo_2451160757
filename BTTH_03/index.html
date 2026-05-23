@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quản Lý Sinh Viên</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- =============================================
+    PHẦN 1: TIÊU ĐỀ TRANG
+    - Hiển thị tên ứng dụng ở đầu trang
+  ============================================= -->
+  <header class="app-header">
+    <h1>🎓 Quản Lý Sinh Viên</h1>
+    <p>Hệ thống quản lý thông tin sinh viên</p>
+  </header>
+
+  <!-- =============================================
+    PHẦN 2: KHU VỰC THÔNG BÁO (NOTIFICATION)
+    - id="notification": JS sẽ dùng để hiện/ẩn thông báo
+    - class="hidden": mặc định bị ẩn, JS sẽ xóa class này khi cần hiện
+  ============================================= -->
+  <div id="notification" class="notification hidden">
+    <!-- Nội dung thông báo sẽ được JS ghi vào đây -->
+  </div>
+
+  <!-- =============================================
+    PHẦN 3: KHU VỰC THỐNG KÊ
+    - Hiển thị tổng số sinh viên và GPA trung bình
+    - id="totalStudents": JS sẽ thay đổi con số này
+    - id="averageGpa": JS sẽ thay đổi con số này
+  ============================================= -->
+  <section class="statistics">
+    <div class="stat-card">
+      <div class="stat-label">Tổng số sinh viên</div>
+      <div class="stat-value" id="totalStudents">0</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">GPA trung bình</div>
+      <div class="stat-value" id="averageGpa">0.00</div>
+    </div>
+  </section>
+
+  <!-- =============================================
+    PHẦN 4: THANH CÔNG CỤ (NÚT THÊM SINH VIÊN)
+    - id="btnOpenModal": JS sẽ gắn sự kiện click vào nút này
+    - Khi bấm nút này → popup hiện ra
+  ============================================= -->
+  <section class="toolbar">
+    <button id="btnOpenModal" class="btn btn-primary">
+      + Thêm sinh viên
+    </button>
+  </section>
+
+  <!-- =============================================
+    PHẦN 5: BẢNG DANH SÁCH SINH VIÊN
+    - <thead>: tiêu đề cột (cố định, không thay đổi)
+    - <tbody id="studentTableBody">: phần thân bảng
+      → JS sẽ render danh sách sinh viên vào đây
+      → Mỗi lần thêm/sửa/xóa, JS sẽ xóa hết và render lại
+  ============================================= -->
+  <section class="table-container">
+    <table class="student-table">
+      <thead>
+        <tr>
+          <th>Mã SV</th>
+          <th>Họ và tên</th>
+          <th>Ngày sinh</th>
+          <th>Lớp</th>
+          <th>GPA</th>
+          <th>Email</th>
+          <th>Thao tác</th>
+        </tr>
+      </thead>
+      <tbody id="studentTableBody">
+        <!-- JS sẽ render các dòng sinh viên vào đây -->
+      </tbody>
+    </table>
+  </section>
+
+  <!-- =============================================
+    PHẦN 6: MODAL POPUP (FORM THÊM / SỬA)
+    - id="modalOverlay": lớp nền tối phía sau popup
+    - class="hidden": mặc định bị ẩn
+    - Khi bấm "Thêm sinh viên" → JS xóa class "hidden" → modal hiện ra
+    - Khi bấm "Đóng/Hủy" → JS thêm class "hidden" → modal biến mất
+  ============================================= -->
+  <div id="modalOverlay" class="modal-overlay hidden">
+
+    <!-- Hộp popup thực sự (nằm giữa màn hình) -->
+    <div class="modal-box">
+
+      <!-- Tiêu đề popup - JS sẽ đổi chữ giữa "Thêm" và "Cập nhật" -->
+      <div class="modal-header">
+        <h2 id="modalTitle">Thêm sinh viên mới</h2>
+        <!-- Nút X để đóng popup -->
+        <button id="btnCloseModal" class="btn-close">✕</button>
+      </div>
+
+      <!-- =============================================
+        FORM NHẬP LIỆU
+        - id="studentForm": JS sẽ gắn sự kiện submit vào đây
+        - Khi bấm "Lưu" → form submit → JS xử lý dữ liệu
+      ============================================= -->
+      <form id="studentForm">
+
+        <!-- Trường ẩn lưu index của sinh viên đang sửa -->
+        <!-- Khi thêm mới: giá trị = "" (rỗng) -->
+        <!-- Khi sửa: giá trị = index trong mảng (0, 1, 2, ...) -->
+        <input type="hidden" id="editIndex" value="" />
+
+        <!-- Hàng 1: Mã SV + Họ tên -->
+        <div class="form-row">
+          <div class="form-group">
+            <label for="studentId">Mã sinh viên *</label>
+            <input type="text" id="studentId" placeholder="VD: SV001" required />
+          </div>
+          <div class="form-group">
+            <label for="fullName">Họ và tên *</label>
+            <input type="text" id="fullName" placeholder="VD: Nguyễn Văn A" required />
+          </div>
+        </div>
+
+        <!-- Hàng 2: Ngày sinh + Lớp -->
+        <div class="form-row">
+          <div class="form-group">
+            <label for="birthDate">Ngày sinh *</label>
+            <input type="date" id="birthDate" required />
+          </div>
+          <div class="form-group">
+            <label for="className">Lớp học *</label>
+            <input type="text" id="className" placeholder="VD: CNTT01" required />
+          </div>
+        </div>
+
+        <!-- Hàng 3: GPA + Email -->
+        <div class="form-row">
+          <div class="form-group">
+            <label for="gpa">Điểm GPA *</label>
+            <input type="number" id="gpa" placeholder="VD: 3.5" min="0" max="4" step="0.01" required />
+          </div>
+          <div class="form-group">
+            <label for="email">Email *</label>
+            <input type="email" id="email" placeholder="VD: abc@email.com" required />
+          </div>
+        </div>
+
+        <!-- Nút hành động -->
+        <div class="form-actions">
+          <button type="button" id="btnCancel" class="btn btn-secondary">Hủy</button>
+          <!-- id="btnSubmit": JS sẽ đổi chữ giữa "Lưu sinh viên" và "Cập nhật" -->
+          <button type="submit" id="btnSubmit" class="btn btn-primary">Lưu sinh viên</button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+
+  <!-- Nhúng file JavaScript vào cuối body -->
+  <!-- Đặt ở đây để đảm bảo HTML đã load xong trước khi JS chạy -->
+  <script src="js/app.js"></script>
+
+</body>
+</html>

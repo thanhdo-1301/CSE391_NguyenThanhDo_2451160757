@@ -1,0 +1,469 @@
+/* ================================================
+   GIAI ĐOẠN 2 — CSS
+   File: css/style.css
+   
+   Giải thích tổng quan:
+   - CSS dùng để trang trí và bố cục giao diện
+   - Chúng ta dùng Flexbox để căn chỉnh các phần tử
+   - Modal dùng position: fixed để nằm trên tất cả nội dung
+   - Class "hidden" dùng để ẩn phần tử (JS sẽ thêm/xóa class này)
+================================================ */
+
+/* --- RESET VÀ CÀI ĐẶT CHUNG ---
+   * { ... }: áp dụng cho TẤT CẢ phần tử
+   box-sizing: bao gồm padding+border trong kích thước
+   margin: 0 và padding: 0 xóa khoảng cách mặc định của trình duyệt
+*/
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Font chữ và màu nền tổng thể */
+body {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background-color: #f0f4f8;
+  color: #2d3748;
+  min-height: 100vh;
+  padding-bottom: 3rem;
+}
+
+/* ================================================
+   PHẦN 1: TIÊU ĐỀ TRANG (HEADER)
+================================================ */
+.app-header {
+  background: linear-gradient(135deg, #1a365d 0%, #2b6cb0 100%);
+  color: white;
+  text-align: center;
+  padding: 2rem 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.app-header h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+}
+
+.app-header p {
+  font-size: 1rem;
+  opacity: 0.85;
+}
+
+/* ================================================
+   PHẦN 2: THÔNG BÁO (NOTIFICATION)
+   
+   Giải thích "hidden":
+   - Mặc định notification có class "hidden" → display: none → ẩn hoàn toàn
+   - Khi JS muốn hiện: xóa class "hidden" → notification xuất hiện
+   - Khi JS muốn ẩn lại: thêm class "hidden" → notification biến mất
+   
+   Tại sao dùng cách này thay vì style.display?
+   → Dễ đọc hơn, dễ quản lý hơn trong JS
+   → Ví dụ: element.classList.remove('hidden')  // hiện
+   →        element.classList.add('hidden')      // ẩn
+================================================ */
+.notification {
+  position: fixed;          /* Nằm cố định trên màn hình, không trôi theo scroll */
+  top: 1.5rem;
+  right: 1.5rem;
+  padding: 1rem 1.5rem;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  z-index: 9999;            /* Nằm trên tất cả mọi thứ */
+  max-width: 350px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+  animation: slideIn 0.3s ease;
+}
+
+/* Thông báo thành công → nền xanh lá */
+.notification.success {
+  background-color: #c6f6d5;
+  color: #276749;
+  border-left: 4px solid #38a169;
+}
+
+/* Thông báo lỗi → nền đỏ */
+.notification.error {
+  background-color: #fed7d7;
+  color: #822727;
+  border-left: 4px solid #e53e3e;
+}
+
+/* Animation nhỏ khi notification xuất hiện */
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(30px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+/* ================================================
+   CLASS "HIDDEN" — QUAN TRỌNG
+   
+   Đây là class dùng để ẩn phần tử.
+   display: none = phần tử biến mất hoàn toàn (không chiếm chỗ)
+   
+   JS sẽ dùng:
+   - element.classList.add('hidden')    → ẩn
+   - element.classList.remove('hidden') → hiện
+   - element.classList.toggle('hidden') → đổi trạng thái
+================================================ */
+.hidden {
+  display: none !important;
+}
+
+/* ================================================
+   PHẦN 3: KHU VỰC THỐNG KÊ
+   
+   display: flex → xếp các stat-card nằm ngang
+   justify-content: center → căn giữa
+   gap → khoảng cách giữa các card
+================================================ */
+.statistics {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  padding: 0 2rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;    /* Xuống hàng nếu màn hình nhỏ */
+}
+
+.stat-card {
+  background: white;
+  border-radius: 12px;
+  padding: 1.2rem 2.5rem;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  border-top: 4px solid #3182ce;
+  min-width: 180px;
+}
+
+.stat-label {
+  font-size: 0.85rem;
+  color: #718096;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.5rem;
+}
+
+.stat-value {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #2b6cb0;
+}
+
+/* ================================================
+   PHẦN 4: THANH CÔNG CỤ (NÚT THÊM)
+================================================ */
+.toolbar {
+  padding: 0 2rem;
+  margin-bottom: 1.5rem;
+}
+
+/* ================================================
+   PHẦN 5: BẢNG DANH SÁCH
+   
+   overflow-x: auto → Cho phép cuộn ngang nếu bảng quá rộng
+   (quan trọng trên điện thoại)
+================================================ */
+.table-container {
+  padding: 0 2rem;
+  overflow-x: auto;
+}
+
+.student-table {
+  width: 100%;
+  border-collapse: collapse;    /* Xóa khoảng trống giữa các ô */
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+/* Tiêu đề cột */
+.student-table thead tr {
+  background: #2b6cb0;
+  color: white;
+}
+
+.student-table th {
+  padding: 1rem 0.875rem;
+  text-align: left;
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+}
+
+/* Các dòng dữ liệu */
+.student-table tbody td {
+  padding: 0.875rem;
+  font-size: 0.9rem;
+  border-bottom: 1px solid #e2e8f0;
+  vertical-align: middle;
+}
+
+/* Dòng chẵn có nền nhạt (zebra striping) */
+.student-table tbody tr:nth-child(even) {
+  background-color: #f7fafc;
+}
+
+/* Hover: khi di chuột qua dòng */
+.student-table tbody tr:hover {
+  background-color: #ebf8ff;
+  transition: background-color 0.15s ease;
+}
+
+/* Dòng thông báo "Chưa có dữ liệu" */
+.empty-row td {
+  text-align: center;
+  color: #a0aec0;
+  font-style: italic;
+  padding: 2rem !important;
+}
+
+/* GPA badge - màu theo điểm */
+.gpa-badge {
+  display: inline-block;
+  padding: 0.2rem 0.6rem;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+.gpa-excellent { background: #c6f6d5; color: #276749; }  /* >= 3.5 */
+.gpa-good      { background: #bee3f8; color: #2c5282; }  /* >= 3.0 */
+.gpa-average   { background: #fefcbf; color: #744210; }  /* >= 2.0 */
+.gpa-poor      { background: #fed7d7; color: #822727; }  /* < 2.0  */
+
+/* ================================================
+   PHẦN 6: CÁC NÚT BẤM (BUTTONS)
+================================================ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;        /* Con trỏ dạng bàn tay khi hover */
+  transition: all 0.2s ease;
+}
+
+.btn:hover {
+  transform: translateY(-1px);      /* Dịch lên 1px → hiệu ứng nổi */
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.btn:active {
+  transform: translateY(0);         /* Nhấn xuống khi click */
+}
+
+.btn-primary {
+  background-color: #3182ce;
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: #2c5282;
+}
+
+.btn-secondary {
+  background-color: #e2e8f0;
+  color: #4a5568;
+}
+
+.btn-secondary:hover {
+  background-color: #cbd5e0;
+}
+
+/* Nút Sửa (màu vàng) - dùng trong bảng */
+.btn-edit {
+  background-color: #ecc94b;
+  color: #744210;
+  padding: 0.35rem 0.75rem;
+  font-size: 0.8rem;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.btn-edit:hover {
+  background-color: #d69e2e;
+  transform: translateY(-1px);
+}
+
+/* Nút Xóa (màu đỏ) - dùng trong bảng */
+.btn-delete {
+  background-color: #fc8181;
+  color: #822727;
+  padding: 0.35rem 0.75rem;
+  font-size: 0.8rem;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s;
+  margin-left: 0.4rem;
+}
+
+.btn-delete:hover {
+  background-color: #e53e3e;
+  color: white;
+  transform: translateY(-1px);
+}
+
+/* ================================================
+   PHẦN 7: MODAL POPUP
+   
+   Tại sao dùng position: fixed?
+   → fixed = phần tử nằm CỐ ĐỊNH so với cửa sổ trình duyệt
+   → Không bị ảnh hưởng bởi scroll
+   → top:0, left:0, right:0, bottom:0 = phủ kín toàn màn hình
+   
+   Tại sao cần z-index cao?
+   → z-index xác định thứ tự xếp chồng (z-axis)
+   → Số càng cao, phần tử càng nằm trên
+   → Modal cần nằm trên tất cả nội dung trang
+================================================ */
+.modal-overlay {
+  position: fixed;           /* Cố định, không trôi theo scroll */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.55);  /* Lớp tối mờ phía sau popup */
+  z-index: 1000;             /* Nằm trên tất cả, nhưng dưới notification (9999) */
+  display: flex;             /* Dùng flex để căn giữa modal-box */
+  align-items: center;       /* Căn dọc giữa màn hình */
+  justify-content: center;   /* Căn ngang giữa màn hình */
+  padding: 1rem;
+}
+
+/* Hộp popup thực sự (hình chữ nhật trắng ở giữa) */
+.modal-box {
+  background: white;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 600px;
+  max-height: 90vh;         /* Tối đa 90% chiều cao màn hình */
+  overflow-y: auto;         /* Cuộn dọc nếu nội dung dài */
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  animation: modalAppear 0.25s ease;
+}
+
+@keyframes modalAppear {
+  from { opacity: 0; transform: scale(0.95) translateY(-10px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+/* Header của modal (có tiêu đề + nút X) */
+.modal-header {
+  display: flex;
+  justify-content: space-between;   /* Tiêu đề bên trái, nút X bên phải */
+  align-items: center;
+  padding: 1.5rem 1.75rem;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.modal-header h2 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #2d3748;
+}
+
+/* Nút X đóng modal */
+.btn-close {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: #a0aec0;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  transition: all 0.2s;
+}
+
+.btn-close:hover {
+  background-color: #fee2e2;
+  color: #e53e3e;
+}
+
+/* ================================================
+   PHẦN 8: FORM TRONG MODAL
+================================================ */
+#studentForm {
+  padding: 1.5rem 1.75rem;
+}
+
+/* form-row: 2 ô input xếp ngang nhau */
+.form-row {
+  display: flex;        /* Xếp theo hàng ngang */
+  gap: 1rem;            /* Khoảng cách giữa 2 ô */
+  margin-bottom: 1rem;
+}
+
+/* form-group: nhãn + input của 1 trường */
+.form-group {
+  flex: 1;              /* Mỗi group chiếm bằng nhau (50% mỗi cái) */
+  display: flex;
+  flex-direction: column;   /* Label ở trên, input ở dưới */
+  gap: 0.4rem;
+}
+
+.form-group label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #4a5568;
+}
+
+/* Tất cả ô nhập liệu */
+.form-group input {
+  padding: 0.65rem 0.875rem;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  color: #2d3748;
+  transition: border-color 0.2s;
+  outline: none;
+}
+
+/* Khi đang gõ vào ô input (focus) */
+.form-group input:focus {
+  border-color: #3182ce;
+  box-shadow: 0 0 0 3px rgba(49,130,206,0.15);
+}
+
+/* Nút Hủy và Lưu */
+.form-actions {
+  display: flex;
+  justify-content: flex-end;   /* Đẩy các nút về bên phải */
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e2e8f0;
+}
+
+/* Responsive cho màn hình nhỏ */
+@media (max-width: 600px) {
+  .form-row {
+    flex-direction: column;   /* Xếp dọc trên điện thoại */
+  }
+
+  .toolbar,
+  .table-container {
+    padding: 0 1rem;
+  }
+
+  .statistics {
+    padding: 0 1rem;
+  }
+
+  .app-header h1 {
+    font-size: 1.5rem;
+  }
+}
