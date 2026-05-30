@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Đoán Số</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 500px;
+            margin: 0 auto;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        h1 {
+            color: #764ba2;
+            margin-bottom: 10px;
+        }
+        .info {
+            font-size: 18px;
+            margin: 20px 0;
+            padding: 15px;
+            background: #f0f0f0;
+            border-radius: 10px;
+        }
+        button {
+            background: #764ba2;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 18px;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        button:hover {
+            background: #667eea;
+        }
+        .rules {
+            text-align: left;
+            margin-top: 20px;
+            padding: 15px;
+            background: #e8e8e8;
+            border-radius: 10px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎲 Game Đoán Số</h1>
+        <div class="info">
+            <p>🔢 Máy đã chọn một số từ <strong>1 đến 100</strong></p>
+            <p>🎯 Bạn có <strong>7 lượt đoán</strong></p>
+        </div>
+        <button onclick="startGame()">🎮 Bắt đầu chơi</button>
+        <div class="rules">
+            <strong>📋 Luật chơi:</strong>
+            <ul>
+                <li>Nhập số từ 1 đến 100</li>
+                <li>Mỗi lượt đoán sẽ được báo "Cao hơn" hoặc "Thấp hơn"</li>
+                <li>Không được đoán trùng số đã đoán</li>
+                <li>Đoán đúng trong 7 lượt là thắng</li>
+            </ul>
+        </div>
+    </div>
+    <script src="guess.js"></script>
+</body>
+</html>
