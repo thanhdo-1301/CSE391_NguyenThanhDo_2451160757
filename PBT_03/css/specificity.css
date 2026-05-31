@@ -1,0 +1,49 @@
+/* Specificity(0, 0, 0) */
+* {
+    color: gray;
+}
+
+/* Specificity(0, 0, 1) */
+p{
+    color: silver;
+}
+
+/* Specificity(0, 0, 2) */
+main p{
+    color: brown;
+}
+
+/* Specificity(0, 1, 0) */
+.text{
+    color: blue;
+}
+
+/* Specificity(0, 1, 1) */
+p.text{
+    color: green;
+}
+
+/* Specificity(0, 2, 0) */
+.text.highlight{
+    color: purple;
+}
+
+/* Specificity(0, 2, 1) */
+p.text.highlight{
+    color: orange;
+}
+
+/* Specificity(1, 0, 0) */
+#demo{
+    color: gold;
+}
+
+/* Specificity(1, 1, 0) */
+.text#demo{
+    color: pink;
+}
+
+/* Specificity(1, 2, 1) */
+p.text.highlight#demo{
+    color: red;
+}

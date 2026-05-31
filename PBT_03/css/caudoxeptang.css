@@ -1,0 +1,72 @@
+/* Reset cơ bản */
+* {
+    box-sizing: border-box;
+}
+
+/* Trang web */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+    color: #333333;
+}
+
+/* Header */
+header {
+    background-color: #4a90e2;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+/* Menu */
+nav a {
+    color: white;
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+/* Link đang chọn */
+nav a.active {
+    font-weight: bold;
+}
+
+/* Nội dung */
+main {
+    width: 80%;
+    margin: 20px auto;
+}
+
+/* Các section */
+.profile,
+.skills {
+    background-color: white;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+/* Bảng */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+/* Ô trong bảng */
+table,
+th,
+td {
+    border: 1px solid #999;
+}
+
+th,
+td {
+    padding: 10px;
+    text-align: center;
+}
+
+/* Footer */
+footer {
+    background-color: #4a90e2;
+    color: white;
+    text-align: center;
+    padding: 10px;
+}
