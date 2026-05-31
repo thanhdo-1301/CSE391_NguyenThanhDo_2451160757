@@ -16,7 +16,7 @@ I. 5 bước xảy ra khi truy cập https://shopee.vn (theo đúng thứ tự):
 5. Paint & Render (Hiển thị): Trình duyệt hoàn thiện việc vẽ các điểm ảnh lên màn hình để cậu thấy giao diện trang chủ Shopee.
 - Mở một trình duyệt web trang shopee và đánh giá kết quả tab Network:
 
-![AnhDevtools](./assets/image-3.jpg)
+![AnhDevtools](./screenshots/image-3.jpg)
 
 __Câu A2:__
 
@@ -198,7 +198,7 @@ __Câu B1:__
 
 **Bài làm:**
 
-![alt text](./assets/image.png)
+![alt text](./screenshots/image.png)
 
 __Câu B2:__
 
@@ -212,13 +212,13 @@ __Câu B2:__
 
 2đ: Code indentation sạch, readable
 
-![alt text](./assets/image-0.png)
-![alt text](./assets/image-1.png)
-![alt text](./assets/image-2.png)
+![alt text](./screenshots/image-0.png)
+![alt text](./screenshots/image-1.png)
+![alt text](./screenshots/image-2.png)
 
 __Câu B3:__
 
-![alt text](image.png)
+![alt text](./screenshots/img1.png)
 
 Lỗi 1: Dòng 1 <!DOCTYPE> thiếu "html" — Sửa thành <!DOCTYPE html>
 
@@ -251,19 +251,19 @@ __Câu B4:__
 
 - Thẻ `<header>`:
 
-![alt text](./assets/img.png)
+![alt text](./screenshots/img.png)
 - Thẻ `<main>`:
 
-![alt text](./assets/img0.png)
+![alt text](./screenshots/img0.png)
 - Thẻ `<footer>`:
 
-![alt text](./assets/img2.png)
+![alt text](./screenshots/img2.png)
 
 2. Thẻ `<table>`:
 
 - Trong bảng có `<thead>` chứa hình ảnh sản phẩm, `<tbody>` chứa thông tin sản phầm tương ứng với mỗi hàng, mỗi cột của sản phẩm đó
 
-![alt text](./assets/tableImg.png)
+![alt text](./screenshots/tableImg.png)
 
 __*- Web shopee có thẻ form*__
 
