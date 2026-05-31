@@ -1,0 +1,149 @@
+// Áp dụng Nesting, Parent Selector (&) kết hợp các Biến và Mixin
+@import 'variables';
+@import 'mixins';
+
+body {
+    font-family: $font-primary;
+    background-color: $background-body;
+}
+
+// Block lồng nhau 1: Header & Navigation
+.header {
+    background-color: $primary-color;
+    color: $white;
+    padding: $spacing-md;
+    @include flex-center(row, space-between, center);
+    position: relative;
+
+    .hamburger {
+        font-size: 24px;
+        cursor: pointer;
+    }
+
+    .menu-checkbox {
+        display: none;
+
+        // Sử dụng selector quan hệ lồng nhau
+        &:checked~.nav {
+            display: flex;
+        }
+    }
+
+    .nav {
+        display: none;
+        flex-direction: column;
+
+        a {
+            color: $white;
+            padding: $spacing-sm $spacing-md;
+            text-decoration: none;
+
+            &:hover {
+                background-color: lighten($primary-color, 10%);
+            }
+        }
+    }
+
+    @include respond-to('tablet') {
+
+        .hamburger,
+        .menu-checkbox {
+            display: none;
+        }
+
+        .nav {
+            display: flex;
+            flex-direction: row;
+        }
+    }
+}
+
+// Block lồng nhau 2: Hệ thống bố cục chính (Main Layout)
+.main-layout {
+    display: flex;
+    flex-direction: column;
+    padding: $spacing-md;
+    gap: $spacing-md;
+
+    .sidebar,
+    .ads-bar {
+        display: none;
+        background: $white;
+        padding: $spacing-md;
+        border-radius: 8px;
+    }
+
+    @include respond-to('tablet') {
+        .sidebar {
+            display: block;
+        }
+    }
+
+    @include respond-to('desktop') {
+        display: grid;
+        grid-template-columns: 200px 1fr 200px;
+        align-items: start;
+
+        .ads-bar {
+            display: block;
+        }
+    }
+}
+
+// Block lồng nhau 3: Thẻ sản phẩm (Product Card Component)
+.product-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: $spacing-md;
+
+    @include respond-to('tablet') {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    @include respond-to('desktop') {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+.product-card {
+    background: $white;
+    padding: $spacing-md;
+    border-radius: 8px;
+    text-align: center;
+    @include card-shadow;
+
+    // Cấu trúc lồng chi tiết (Nesting)
+    .img-box {
+        background: lighten($primary-color, 70%);
+        margin-bottom: $spacing-sm;
+        border-radius: 4px;
+        overflow: hidden;
+        aspect-ratio: 1 / 1;
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    }
+
+    h4 {
+        margin: $spacing-sm 0;
+        color: $primary-color;
+    }
+
+    p {
+        color: $secondary-color;
+        font-weight: bold;
+    }
+
+    // Parent Selector ứng dụng trạng thái hover & modifier class
+    &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    }
+
+    &.featured {
+        border: 2px solid $secondary-color;
+    }
+}
