@@ -1,0 +1,95 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+/* ================= LAYOUT GRID ================= */
+.layout {
+  display: grid;
+
+  grid-template-columns: 200px minmax(600px, 1fr) 200px;
+
+  grid-template-areas:
+    "header header header"
+    "hero hero hero"
+    "sidebar main ads"
+    "footer footer footer";
+
+  gap: 20px;
+  padding: 20px;
+}
+
+/* ================= AREAS ================= */
+.header {
+  grid-area: header;
+  background: #222;
+  color: white;
+  padding: 20px;
+}
+
+.hero {
+  grid-area: hero;
+  background: #eee;
+  padding: 20px;
+}
+
+.sidebar {
+  grid-area: sidebar;
+  background: #f4f4f4;
+  padding: 20px;
+}
+
+.main {
+  grid-area: main;
+}
+
+.ads {
+  grid-area: ads;
+  background: #ddd;
+  padding: 10px;
+}
+
+.footer {
+  grid-area: footer;
+  background: #222;
+  color: white;
+  padding: 20px;
+  text-align: center;
+}
+
+/* ================= HERO GRID (BONUS) ================= */
+.hero-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.hero-item {
+  background: #ccc;
+  padding: 40px;
+  text-align: center;
+}
+
+/* nổi bật */
+.featured {
+  grid-column: span 2;
+  background: orange;
+}
+
+/* ================= MAIN GRID ================= */
+.main {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+}
+
+/* CARD */
+.card {
+  background: #ddd;
+  padding: 40px;
+  text-align: center;
+}
